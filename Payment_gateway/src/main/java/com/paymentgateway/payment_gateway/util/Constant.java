@@ -27,7 +27,48 @@ public final class Constant {
       public static final String PAYMENT_REFUND = "Failed to refund payment: ";
       public static final String WEBHOOK_FAILED = "Failed to process webhook notification: " ;
       public static final String UNSUPPORTED_PROVIDER = "Unsupported payment provider: "  ;
+      public static final String  TRANSACTION_VALUE = "Amount and quantity must be greater than 0";
   }
+
+    public static final class Currency {
+        private Currency() {}
+
+        // Currencies
+        public static final String KWD = "KWD"; // Kuwaiti Dinar
+        public static final String BHD = "BHD"; // Bahraini Dinar
+        public static final String OMR = "OMR"; // Omani Rial
+        public static final String JOD = "JOD"; // Jordanian Dinar
+        public static final String IQD = "IQD"; // Iraqi Dinar
+        public static final String LYD = "LYD"; // Libyan Dinar
+        public static final String TND = "TND"; // Tunisian Dinar
+
+        public static final String JPY = "JPY"; // Japanese Yen
+        public static final String KRW = "KRW"; // South Korean Won
+        public static final String VND = "VND"; // Vietnamese Dong
+        public static final String CLP = "CLP"; // Chilean Peso
+        public static final String ISK = "ISK"; // Icelandic Krona
+        public static final String TWD = "TWD"; // New Taiwan Dollar
+        public static final String PYG = "PYG"; // Paraguayan Guarani
+        public static final String UGX = "UGX"; // Ugandan Shilling
+        public static final String RWF = "RWF"; // Rwandan Franc
+        public static final String XAF = "XAF"; // Central African CFA Franc
+        public static final String XOF = "XOF"; // West African CFA Franc
+        public static final String XPF = "XPF"; // CFP Franc
+        public static final String BIF = "BIF"; // Burundian Franc
+        public static final String DJF = "DJF"; // Djiboutian Franc
+        public static final String GNF = "GNF"; // Guinean Franc
+        public static final String KMF = "KMF"; // Comorian Franc
+        public static final String MGA = "MGA"; // Malagasy Ariary
+        public static final String VUV = "VUV"; // Vanuatu Vatu
+    }
+
+    public static final class CurrencyDecimal {
+        private CurrencyDecimal() {}
+
+        public static final int ZERO_DECIMALS = 0;
+        public static final int TWO_DECIMALS = 2;
+        public static final int THREE_DECIMALS = 3;
+    }
 
   public final class PayPalMessage{
         private PayPalMessage() {}
@@ -97,7 +138,7 @@ public final class Constant {
   }
     public final class AdyenURL{
         private AdyenURL() {}
-        public static final String Redirect = "http://localhost:8080/api/v1/handle-redirect";
+        public static final String ADYEN_REDIRECT = "/handle-redirect";
     }
 
   public final class StripeWebhookConstant{
@@ -122,10 +163,9 @@ public final class Constant {
 
 
 
-  public final class AdyenController{
-        private AdyenController() {}
+  public final class AdyenWebhook {
+        private AdyenWebhook() {}
 
-      public static final String ADYEN_REDIRECT = "/handle-redirect";
       public static final String WEBHOOK_CONTROLLER = "/api/v1/webhooks" ;
       public static final String WEBHOOK_ENDPOINT= "/notifications";
   }

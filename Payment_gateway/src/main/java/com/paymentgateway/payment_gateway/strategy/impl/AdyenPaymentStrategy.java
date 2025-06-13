@@ -12,6 +12,7 @@ import com.paymentgateway.payment_gateway.dto.PaymentResponse;
 import com.paymentgateway.payment_gateway.exception.*;
 import com.paymentgateway.payment_gateway.strategy.PaymentStrategy;
 import com.paymentgateway.payment_gateway.util.Constant;
+import com.paymentgateway.payment_gateway.util.CurrencyConverter;
 import org.springframework.stereotype.Component;
 
 
@@ -37,9 +38,12 @@ public class AdyenPaymentStrategy implements PaymentStrategy {
     public PaymentResponse createDirectPayment(PaymentRequest request) {
         try {
 
+
+            Long  convertedAmount = CurrencyConverter.convertAmount(request.amount(), request.currency());
+
             Amount amount = new Amount()
                     .currency(request.currency())
-                    .value(request.amount() * Constant.AdyenService.VALUE  * request.quantity() );
+                    .value(convertedAmount * request.quantity() );
 
             String orderReference = Constant.AdyenService.PREFIX_UUID + UUID.randomUUID();
 
@@ -56,7 +60,7 @@ public class AdyenPaymentStrategy implements PaymentStrategy {
                     response.getUrl(),
                     response.getReference(),
                     Constant.CommonRsponseData.ACCEPT,
-                    Constant.AdyenURL.Redirect
+                    Constant.CommonSuccessMessage.PAYMENT_DIRECT
             );
         } catch (IOException | ApiException e ) {
             throw new PaymentException(Constant.CommonExeption.PAYMENT_DIRECT + e.getMessage() );
@@ -66,9 +70,12 @@ public class AdyenPaymentStrategy implements PaymentStrategy {
     @Override
     public PaymentResponse createAuthorizationPayment(PaymentRequest request) {
         try {
+
+            Long  convertedAmount = CurrencyConverter.convertAmount(request.amount(), request.currency());
+
             Amount amount = new Amount()
                     .currency(request.currency())
-                    .value(request.amount() * Constant.AdyenService.VALUE  * request.quantity() );
+                    .value(convertedAmount * request.quantity() );
 
             String orderReference = Constant.AdyenService.PREFIX_UUID + UUID.randomUUID();
 
@@ -96,10 +103,11 @@ public class AdyenPaymentStrategy implements PaymentStrategy {
     public PaymentOperationResponse capturePayment(PaymentOperationRequest request) {
         try {
 
+            Long  convertedAmount = CurrencyConverter.convertAmount(request.amount(), request.currency());
 
             Amount amount = new Amount()
                     .currency(request.currency())
-                    .value(request.amount() * Constant.AdyenService.VALUE);
+                    .value(convertedAmount );
 
             PaymentCaptureRequest captureRequest = new PaymentCaptureRequest()
                     .merchantAccount(config.getMerchantAccount())
