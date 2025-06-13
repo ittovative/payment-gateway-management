@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(Constant.AdyenController.WEBHOOK_CONTROLLER)
+@RequestMapping(Constant.AdyenWebhook.WEBHOOK_CONTROLLER)
 @Slf4j
 public class AdyenWebhookController {
 
@@ -28,7 +28,7 @@ public class AdyenWebhookController {
         this.adyenConfigProperties = adyenConfigProperties;
     }
 
-    @PostMapping(Constant.AdyenController.WEBHOOK_ENDPOINT)
+    @PostMapping(Constant.AdyenWebhook.WEBHOOK_ENDPOINT)
     public ResponseEntity<APIResponse<String>> webhooks(@RequestBody String json)  {
 
         try {

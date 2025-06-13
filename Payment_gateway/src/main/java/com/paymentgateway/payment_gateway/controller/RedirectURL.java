@@ -11,18 +11,18 @@ public class RedirectURL {
 
 
     @GetMapping(Constant.RedirectURL.SUCCESS_ENDPOINT)
-    public String Success(){
+    public String success(){
         return Constant.CommonRsponseData.ACCEPT;
     }
 
     @GetMapping(Constant.RedirectURL.FAILURE_ENDPOINT)
-    public String Failure(){
+    public String failure(){
         return Constant.CommonRsponseData.FAILURE;
     }
 
 
-    @GetMapping(Constant.AdyenController.ADYEN_REDIRECT)
-    public String AdyenRedirect(){
+    @GetMapping(Constant.AdyenURL.ADYEN_REDIRECT)
+    public String adyenRedirect(){
         return Constant.CommonRsponseData.ACCEPT;
     }
 
