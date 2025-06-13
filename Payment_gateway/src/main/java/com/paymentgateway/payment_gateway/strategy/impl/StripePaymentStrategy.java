@@ -4,6 +4,7 @@ import com.paymentgateway.payment_gateway.dto.*;
 import com.paymentgateway.payment_gateway.exception.*;
 import com.paymentgateway.payment_gateway.strategy.PaymentStrategy;
 import com.paymentgateway.payment_gateway.util.Constant;
+import com.paymentgateway.payment_gateway.util.CurrencyConverter;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.PaymentIntent;
@@ -140,6 +141,8 @@ public class StripePaymentStrategy implements PaymentStrategy {
 
     private SessionCreateParams buildSessionParams(PaymentRequest request, boolean requiresManualCapture) {
 
+        Long  convertedAmount = CurrencyConverter.convertAmount(request.amount(), request.currency());
+
         SessionCreateParams.LineItem.PriceData.ProductData productData =
                 SessionCreateParams.LineItem.PriceData.ProductData.builder()
                         .setName( request.description() != null ? request.description() : Constant.StripeStrategy.DESCRIPTION)
@@ -148,7 +151,7 @@ public class StripePaymentStrategy implements PaymentStrategy {
         SessionCreateParams.LineItem.PriceData priceData =
                 SessionCreateParams.LineItem.PriceData.builder()
                         .setCurrency(request.currency().toLowerCase())
-                        .setUnitAmount(request.amount() * Constant.StripeStrategy.VALUE )
+                        .setUnitAmount( convertedAmount )
                         .setProductData(productData)
                         .build();
 
