@@ -6,7 +6,7 @@ import com.paymentgateway.payment_gateway.config.AdyenConfigProperties;
 import com.paymentgateway.payment_gateway.exception.HMACValidationException;
 import com.paymentgateway.payment_gateway.exception.WebhookException;
 import com.paymentgateway.payment_gateway.util.APIResponse;
-import com.paymentgateway.payment_gateway.util.Constant;
+import com.paymentgateway.payment_gateway.util.Constants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(Constant.AdyenWebhook.WEBHOOK_CONTROLLER)
+@RequestMapping(Constants.AdyenWebhook.WEBHOOK_CONTROLLER)
 @Slf4j
 public class AdyenWebhookController {
 
@@ -28,7 +28,7 @@ public class AdyenWebhookController {
         this.adyenConfigProperties = adyenConfigProperties;
     }
 
-    @PostMapping(Constant.AdyenWebhook.WEBHOOK_ENDPOINT)
+    @PostMapping(Constants.AdyenWebhook.WEBHOOK_ENDPOINT)
     public ResponseEntity<APIResponse<String>> webhooks(@RequestBody String json)  {
 
         try {
@@ -40,16 +40,16 @@ public class AdyenWebhookController {
                 var item = notificationRequestItem.get();
 
                 if (!hmacValidator.validateHMAC(item, adyenConfigProperties.getHmacKey())) {
-                    throw new HMACValidationException(Constant.Adyenwebhook.HMAC_VALIDATION_FAILED);
+                    throw new HMACValidationException(Constants.Adyenwebhook.HMAC_VALIDATION_FAILED);
                 }
-                log.info(Constant.Adyenwebhook.LOG_MESSAGE, item.getPspReference());
+                log.info(Constants.Adyenwebhook.LOG_MESSAGE, item.getPspReference());
 
             }
 
-            return ResponseEntity.ok(APIResponse.ok(Constant.CommonSuccessMessage.OK, Constant.CommonSuccessMessage.WEBHOOK));
+            return ResponseEntity.ok(APIResponse.ok(Constants.CommonSuccessMessage.OK, Constants.CommonSuccessMessage.WEBHOOK));
         }
         catch (Exception e){
-            throw new WebhookException(Constant.CommonExeption.WEBHOOK_FAILED + e.getMessage() );
+            throw new WebhookException(Constants.CommonExeption.WEBHOOK_FAILED + e.getMessage() );
         }
 
 

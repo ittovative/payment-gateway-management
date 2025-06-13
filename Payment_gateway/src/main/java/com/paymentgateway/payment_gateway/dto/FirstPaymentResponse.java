@@ -1,6 +1,6 @@
 package com.paymentgateway.payment_gateway.dto;
 
-public record PaymentResponse(
+public record FirstPaymentResponse(
 
         String redirectUrl,
         String referenceId,

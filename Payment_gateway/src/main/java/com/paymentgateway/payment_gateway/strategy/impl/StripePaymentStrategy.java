@@ -3,7 +3,7 @@ package com.paymentgateway.payment_gateway.strategy.impl;
 import com.paymentgateway.payment_gateway.dto.*;
 import com.paymentgateway.payment_gateway.exception.*;
 import com.paymentgateway.payment_gateway.strategy.PaymentStrategy;
-import com.paymentgateway.payment_gateway.util.Constant;
+import com.paymentgateway.payment_gateway.util.Constants;
 import com.paymentgateway.payment_gateway.util.CurrencyConverter;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
@@ -26,45 +26,45 @@ public class StripePaymentStrategy implements PaymentStrategy {
 
 
     @Override
-    public PaymentResponse createDirectPayment(PaymentRequest request) {
+    public FirstPaymentResponse createDirectPayment(FirstPaymentRequest request) {
         try {
             Stripe.apiKey = secretKey;
 
             SessionCreateParams params = buildSessionParams(request, false);
             Session session = Session.create(params);
 
-            return new PaymentResponse(
+            return new FirstPaymentResponse(
                     session.getUrl(),
                     session.getId(),
-                    Constant.CommonRsponseData.ACCEPT,
-                    Constant.CommonSuccessMessage.PAYMENT_DIRECT
+                    Constants.CommonRsponseData.ACCEPT,
+                    Constants.CommonSuccessMessage.PAYMENT_DIRECT
             );
         } catch (StripeException e) {
-            throw new PaymentException(Constant.CommonExeption.PAYMENT_DIRECT + e.getMessage(), e);
+            throw new PaymentException(Constants.CommonExeption.PAYMENT_DIRECT + e.getMessage(), e);
         }
     }
 
     @Override
-    public PaymentResponse createAuthorizationPayment(PaymentRequest request) {
+    public FirstPaymentResponse createAuthorizationPayment(FirstPaymentRequest request) {
         try {
             Stripe.apiKey = secretKey;
 
             SessionCreateParams params = buildSessionParams(request, true);
             Session session = Session.create(params);
 
-            return new PaymentResponse(
+            return new FirstPaymentResponse(
                     session.getUrl(),
                     session.getId(),
-                    Constant.CommonRsponseData.ACCEPT,
-                    Constant.CommonSuccessMessage.PAYMENT_AUTHORIZATION
+                    Constants.CommonRsponseData.ACCEPT,
+                    Constants.CommonSuccessMessage.PAYMENT_AUTHORIZATION
             );
         } catch (StripeException e) {
-            throw new AuthenticationCreationException(Constant.CommonExeption.PAYMENT_AUTHORIZATION + e.getMessage() );
+            throw new AuthenticationCreationException(Constants.CommonExeption.PAYMENT_AUTHORIZATION + e.getMessage() );
         }
     }
 
     @Override
-    public PaymentOperationResponse capturePayment(PaymentOperationRequest request) {
+    public SubsequentPaymentResponse capturePayment(SubsequentPaymentRequest request) {
         try {
             Stripe.apiKey = secretKey;
 
@@ -75,21 +75,21 @@ public class StripePaymentStrategy implements PaymentStrategy {
 
             PaymentIntent captured = resource.capture(params);
 
-            return new PaymentOperationResponse(
+            return new SubsequentPaymentResponse(
                     request.referenceId(),
                     captured.getId(),
                     captured.getAmountCapturable(),
                     captured.getCurrency(),
-                    Constant.CommonRsponseData.ACCEPT,
-                    Constant.CommonSuccessMessage.PAYMENT_CAPTURE
+                    Constants.CommonRsponseData.ACCEPT,
+                    Constants.CommonSuccessMessage.PAYMENT_CAPTURE
             );
         } catch (StripeException e) {
-            throw new CaptureException( Constant.CommonExeption.PAYMENT_CAPTURE + e.getMessage() );
+            throw new CaptureException( Constants.CommonExeption.PAYMENT_CAPTURE + e.getMessage() );
         }
     }
 
     @Override
-    public PaymentOperationResponse cancelPayment(PaymentOperationRequest request) {
+    public SubsequentPaymentResponse cancelPayment(SubsequentPaymentRequest request) {
         try {
             Stripe.apiKey = secretKey;
 
@@ -97,21 +97,21 @@ public class StripePaymentStrategy implements PaymentStrategy {
             PaymentIntentCancelParams params = PaymentIntentCancelParams.builder().build();
             PaymentIntent cancelled = resource.cancel(params);
 
-            return new PaymentOperationResponse(
+            return new SubsequentPaymentResponse(
                     request.referenceId(),
                     cancelled.getId(),
                     null,
                     null,
-                    Constant.CommonRsponseData.ACCEPT,
-                    Constant.CommonSuccessMessage.PAYMENT_CANCEL
+                    Constants.CommonRsponseData.ACCEPT,
+                    Constants.CommonSuccessMessage.PAYMENT_CANCEL
             );
         } catch (StripeException e) {
-            throw new CancelException(Constant.CommonExeption.PAYMENT_CANCEL + e.getMessage() );
+            throw new CancelException(Constants.CommonExeption.PAYMENT_CANCEL + e.getMessage() );
         }
     }
 
     @Override
-    public PaymentOperationResponse refundPayment(PaymentOperationRequest request) {
+    public SubsequentPaymentResponse refundPayment(SubsequentPaymentRequest request) {
         try {
             Stripe.apiKey = secretKey;
 
@@ -121,31 +121,31 @@ public class StripePaymentStrategy implements PaymentStrategy {
 
             Refund refund = Refund.create(params);
 
-            return new PaymentOperationResponse(
+            return new SubsequentPaymentResponse(
                     request.referenceId(),
                     refund.getPaymentIntent(),
                     refund.getAmount(),
                     refund.getCurrency(),
-                    Constant.CommonRsponseData.ACCEPT,
-                    Constant.CommonSuccessMessage.PAYMENT_REFUND
+                    Constants.CommonRsponseData.ACCEPT,
+                    Constants.CommonSuccessMessage.PAYMENT_REFUND
             );
         } catch (StripeException e) {
-            throw new RefundException( Constant.CommonExeption.PAYMENT_REFUND + e.getMessage() );
+            throw new RefundException( Constants.CommonExeption.PAYMENT_REFUND + e.getMessage() );
         }
     }
 
     @Override
     public String getProviderName() {
-        return Constant.Provider.STRIPE_PROVIDER;
+        return Constants.Provider.STRIPE_PROVIDER;
     }
 
-    private SessionCreateParams buildSessionParams(PaymentRequest request, boolean requiresManualCapture) {
+    private SessionCreateParams buildSessionParams(FirstPaymentRequest request, boolean requiresManualCapture) {
 
         Long  convertedAmount = CurrencyConverter.convertAmount(request.amount(), request.currency());
 
         SessionCreateParams.LineItem.PriceData.ProductData productData =
                 SessionCreateParams.LineItem.PriceData.ProductData.builder()
-                        .setName( request.description() != null ? request.description() : Constant.StripeStrategy.DESCRIPTION)
+                        .setName( request.description() != null ? request.description() : Constants.StripeStrategy.DESCRIPTION)
                         .build();
 
         SessionCreateParams.LineItem.PriceData priceData =
@@ -164,8 +164,8 @@ public class StripePaymentStrategy implements PaymentStrategy {
         SessionCreateParams.Builder paramsBuilder =
                 SessionCreateParams.builder()
                         .setMode(SessionCreateParams.Mode.PAYMENT)
-                        .setSuccessUrl(Constant.StripeURL.SUCCESS_URL)
-                        .setCancelUrl(Constant.StripeURL.FAILED_URL)
+                        .setSuccessUrl(Constants.StripeURL.SUCCESS_URL)
+                        .setCancelUrl(Constants.StripeURL.FAILED_URL)
                         .addLineItem(lineItem);
 
         if (requiresManualCapture) {

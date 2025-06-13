@@ -50,25 +50,25 @@ public class GlobalExceptionHandler {
 //    @ExceptionHandler(ApiException.class)
 //    public ResponseEntity<APIResponse<String>> handleApiException(ApiException ex) {
 //        logger.error("Adyen API error: {}", ex.getMessage(), ex);
-//        APIResponse<String> response = APIResponse.error(HttpStatus.BAD_REQUEST.value(), Constant.GlobalExceptionHandler.ADYEN_API_ERROR);
+//        APIResponse<String> response = APIResponse.error(HttpStatus.BAD_REQUEST.value(), Constants.GlobalExceptionHandler.ADYEN_API_ERROR);
 //        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
 //    }
 
     @ExceptionHandler(IOException.class)
-    public ResponseEntity<APIResponse<String>> handleIOException(IOException ex) { // todo : Constant.GlobalExceptionHandler
+    public ResponseEntity<APIResponse<String>> handleIOException(IOException ex) { // todo : Constants.GlobalExceptionHandler
 
         APIResponse<String> response = APIResponse.error(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Internal Server Error");
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<APIResponse<String>> handleAllExceptions(Exception ex) {  // todo : Constant.GlobalExceptionHandler
+    public ResponseEntity<APIResponse<String>> handleAllExceptions(Exception ex) {  // todo : Constants.GlobalExceptionHandler
 
         APIResponse<String> response = APIResponse.error(HttpStatus.INTERNAL_SERVER_ERROR.value(),"Internal Server Error");
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @ExceptionHandler(HMACValidationException.class) // todo : Constant.GlobalExceptionHandler.HMAC_VALIDATION_ERROR
+    @ExceptionHandler(HMACValidationException.class) // todo : Constants.GlobalExceptionHandler.HMAC_VALIDATION_ERROR
     public ResponseEntity<APIResponse<String>> handleHMACValidationException(HMACValidationException ex) {
 
         APIResponse<String> response = APIResponse.error(HttpStatus.UNAUTHORIZED.value(), "Internal Server Error");

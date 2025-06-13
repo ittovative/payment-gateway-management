@@ -1,6 +1,6 @@
 package com.paymentgateway.payment_gateway.config;
 
-import com.paymentgateway.payment_gateway.util.Constant;
+import com.paymentgateway.payment_gateway.util.Constants;
 import com.paypal.base.rest.APIContext;
 import com.paypal.base.rest.OAuthTokenCredential;
 import com.paypal.base.rest.PayPalRESTException;
@@ -26,7 +26,7 @@ public class PayPalConfig {
     @Bean
     public Map<String, String> paypalSdkConfig() {
         Map<String, String> configMap = new HashMap<>();
-        configMap.put(Constant.PayPalMessage.MODE, mode);
+        configMap.put(Constants.PayPalMessage.MODE, mode);
         return configMap;
     }
 

@@ -1,12 +1,12 @@
 package com.paymentgateway.payment_gateway.controller;
 
-import com.paymentgateway.payment_gateway.dto.PaymentOperationRequest;
-import com.paymentgateway.payment_gateway.dto.PaymentOperationResponse;
-import com.paymentgateway.payment_gateway.dto.PaymentRequest;
-import com.paymentgateway.payment_gateway.dto.PaymentResponse;
+import com.paymentgateway.payment_gateway.dto.SubsequentPaymentRequest;
+import com.paymentgateway.payment_gateway.dto.SubsequentPaymentResponse;
+import com.paymentgateway.payment_gateway.dto.FirstPaymentRequest;
+import com.paymentgateway.payment_gateway.dto.FirstPaymentResponse;
 import com.paymentgateway.payment_gateway.service.PaymentOrchestrator;
 import com.paymentgateway.payment_gateway.util.APIResponse;
-import com.paymentgateway.payment_gateway.util.Constant;
+import com.paymentgateway.payment_gateway.util.Constants;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(Constant.PaymentController.PAYMENT)
+@RequestMapping(Constants.PaymentController.PAYMENT)
 
 public class PaymentController {
 
@@ -25,59 +25,59 @@ public class PaymentController {
         this.paymentOrchestrator = paymentOrchestrator;
     }
 
-    @PostMapping(Constant.PaymentController.PAYMENT_DIRECT)
-    public ResponseEntity<APIResponse<PaymentResponse>> createDirectPayment(
-            @RequestBody PaymentRequest request) {
+    @PostMapping(Constants.PaymentController.PAYMENT_DIRECT)
+    public ResponseEntity<APIResponse<FirstPaymentResponse>> createDirectPayment(
+            @RequestBody FirstPaymentRequest request) {
 
-        PaymentResponse response = paymentOrchestrator.createDirectPayment(request);
+        FirstPaymentResponse response = paymentOrchestrator.createDirectPayment(request);
 
         return ResponseEntity.ok(
-                APIResponse.ok(response, Constant.CommonSuccessMessage.PAYMENT_DIRECT)
+                APIResponse.ok(response, Constants.CommonSuccessMessage.PAYMENT_DIRECT)
         );
     }
 
-    @PostMapping(Constant.PaymentController.PAYMENT_AUTHORIZATION)
-    public ResponseEntity<APIResponse<PaymentResponse>> createAuthorizationPayment(
-            @RequestBody PaymentRequest request) {
+    @PostMapping(Constants.PaymentController.PAYMENT_AUTHORIZATION)
+    public ResponseEntity<APIResponse<FirstPaymentResponse>> createAuthorizationPayment(
+            @RequestBody FirstPaymentRequest request) {
 
-        PaymentResponse response = paymentOrchestrator.createAuthorizationPayment(request);
+        FirstPaymentResponse response = paymentOrchestrator.createAuthorizationPayment(request);
 
         return ResponseEntity.ok(
-                APIResponse.ok(response, Constant.CommonSuccessMessage.PAYMENT_AUTHORIZATION)
+                APIResponse.ok(response, Constants.CommonSuccessMessage.PAYMENT_AUTHORIZATION)
         );
     }
 
-    @PostMapping(Constant.PaymentController.PAYMENT_CAPTURE)
-    public ResponseEntity<APIResponse<PaymentOperationResponse>> capturePayment(
-            @RequestBody PaymentOperationRequest request) {
+    @PostMapping(Constants.PaymentController.PAYMENT_CAPTURE)
+    public ResponseEntity<APIResponse<SubsequentPaymentResponse>> capturePayment(
+            @RequestBody SubsequentPaymentRequest request) {
 
-        PaymentOperationResponse response = paymentOrchestrator.capturePayment(request);
+        SubsequentPaymentResponse response = paymentOrchestrator.capturePayment(request);
 
         return ResponseEntity.ok(
-                APIResponse.ok(response, Constant.CommonSuccessMessage.PAYMENT_CAPTURE)
+                APIResponse.ok(response, Constants.CommonSuccessMessage.PAYMENT_CAPTURE)
         );
     }
 
-    @PostMapping(Constant.PaymentController.PAYMENT_CANCEL)
-    public ResponseEntity<APIResponse<PaymentOperationResponse>> cancelPayment(
-            @RequestBody PaymentOperationRequest request) {
+    @PostMapping(Constants.PaymentController.PAYMENT_CANCEL)
+    public ResponseEntity<APIResponse<SubsequentPaymentResponse>> cancelPayment(
+            @RequestBody SubsequentPaymentRequest request) {
 
-        PaymentOperationResponse response = paymentOrchestrator.cancelPayment(request);
+        SubsequentPaymentResponse response = paymentOrchestrator.cancelPayment(request);
 
         return ResponseEntity.ok(
-                APIResponse.ok(response, Constant.CommonSuccessMessage.PAYMENT_CANCEL)
+                APIResponse.ok(response, Constants.CommonSuccessMessage.PAYMENT_CANCEL)
         );
     }
 
-    @PostMapping(Constant.PaymentController.PAYMENT_REFUND)
-    public ResponseEntity<APIResponse<PaymentOperationResponse>> refundPayment(
-            @RequestBody PaymentOperationRequest request) {
+    @PostMapping(Constants.PaymentController.PAYMENT_REFUND)
+    public ResponseEntity<APIResponse<SubsequentPaymentResponse>> refundPayment(
+            @RequestBody SubsequentPaymentRequest request) {
 
 
-        PaymentOperationResponse response = paymentOrchestrator.refundPayment(request);
+        SubsequentPaymentResponse response = paymentOrchestrator.refundPayment(request);
 
         return ResponseEntity.ok(
-                APIResponse.ok(response, Constant.CommonSuccessMessage.PAYMENT_REFUND)
+                APIResponse.ok(response, Constants.CommonSuccessMessage.PAYMENT_REFUND)
         );
     }
 }

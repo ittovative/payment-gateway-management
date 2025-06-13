@@ -1,6 +1,6 @@
 package com.paymentgateway.payment_gateway.dto;
 
-public record PaymentOperationResponse(
+public record SubsequentPaymentResponse(
         String referenceId,
         String operationReference,
         Long amount,

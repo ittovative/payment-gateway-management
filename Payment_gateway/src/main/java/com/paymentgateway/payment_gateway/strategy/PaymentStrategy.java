@@ -1,21 +1,21 @@
 package com.paymentgateway.payment_gateway.strategy;
 
-import com.paymentgateway.payment_gateway.dto.PaymentOperationRequest;
-import com.paymentgateway.payment_gateway.dto.PaymentOperationResponse;
-import com.paymentgateway.payment_gateway.dto.PaymentRequest;
-import com.paymentgateway.payment_gateway.dto.PaymentResponse;
+import com.paymentgateway.payment_gateway.dto.SubsequentPaymentRequest;
+import com.paymentgateway.payment_gateway.dto.SubsequentPaymentResponse;
+import com.paymentgateway.payment_gateway.dto.FirstPaymentRequest;
+import com.paymentgateway.payment_gateway.dto.FirstPaymentResponse;
 
 public interface PaymentStrategy {
 
-    PaymentResponse createDirectPayment(PaymentRequest request);
+    FirstPaymentResponse createDirectPayment(FirstPaymentRequest request);
 
-    PaymentResponse createAuthorizationPayment(PaymentRequest request);
+    FirstPaymentResponse createAuthorizationPayment(FirstPaymentRequest request);
 
-    PaymentOperationResponse capturePayment(PaymentOperationRequest request);
+    SubsequentPaymentResponse capturePayment(SubsequentPaymentRequest request);
 
-    PaymentOperationResponse cancelPayment(PaymentOperationRequest request);
+    SubsequentPaymentResponse cancelPayment(SubsequentPaymentRequest request);
 
-    PaymentOperationResponse refundPayment(PaymentOperationRequest request);
+    SubsequentPaymentResponse refundPayment(SubsequentPaymentRequest request);
 
     String getProviderName();
 }

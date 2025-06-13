@@ -6,7 +6,7 @@ import com.adyen.service.checkout.ModificationsApi;
 import com.adyen.service.checkout.PaymentLinksApi;
 import com.adyen.service.checkout.PaymentsApi;
 
-import com.paymentgateway.payment_gateway.util.Constant;
+import com.paymentgateway.payment_gateway.util.Constants;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -15,7 +15,7 @@ public class AdyenConfig {
 
     @Bean
     public Client adyenClient(AdyenConfigProperties config) {
-        Environment env = Constant.AdyenConfig.ADYEN_ENVIRONMENT.equalsIgnoreCase(config.getEnvironment())
+        Environment env = Constants.AdyenConfig.ADYEN_ENVIRONMENT.equalsIgnoreCase(config.getEnvironment())
                 ? Environment.LIVE
                 : Environment.TEST;
 

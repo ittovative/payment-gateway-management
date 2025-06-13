@@ -2,7 +2,7 @@ package com.paymentgateway.payment_gateway.factory;
 
 import com.paymentgateway.payment_gateway.exception.UnsupportPaymentProvider;
 import com.paymentgateway.payment_gateway.strategy.PaymentStrategy;
-import com.paymentgateway.payment_gateway.util.Constant;
+import com.paymentgateway.payment_gateway.util.Constants;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -29,7 +29,7 @@ public class PaymentStrategyFactory {
     public PaymentStrategy getStrategy(String provider) {
         PaymentStrategy strategy = strategies.get(provider.toUpperCase());
         if (Objects.isNull(strategy) ) {
-            throw new UnsupportPaymentProvider( Constant.CommonExeption.UNSUPPORTED_PROVIDER + provider);
+            throw new UnsupportPaymentProvider( Constants.CommonExeption.UNSUPPORTED_PROVIDER + provider);
         }
         return strategy;
     }

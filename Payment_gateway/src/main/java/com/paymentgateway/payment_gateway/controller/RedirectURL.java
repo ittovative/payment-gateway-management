@@ -1,29 +1,29 @@
 package com.paymentgateway.payment_gateway.controller;
 
-import com.paymentgateway.payment_gateway.util.Constant;
+import com.paymentgateway.payment_gateway.util.Constants;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(Constant.RedirectURL.STRIPE_CONTROLLER)
+@RequestMapping(Constants.RedirectURL.STRIPE_CONTROLLER)
 public class RedirectURL {
 
 
-    @GetMapping(Constant.RedirectURL.SUCCESS_ENDPOINT)
+    @GetMapping(Constants.RedirectURL.SUCCESS_ENDPOINT)
     public String success(){
-        return Constant.CommonRsponseData.ACCEPT;
+        return Constants.CommonRsponseData.ACCEPT;
     }
 
-    @GetMapping(Constant.RedirectURL.FAILURE_ENDPOINT)
+    @GetMapping(Constants.RedirectURL.FAILURE_ENDPOINT)
     public String failure(){
-        return Constant.CommonRsponseData.FAILURE;
+        return Constants.CommonRsponseData.FAILURE;
     }
 
 
-    @GetMapping(Constant.AdyenURL.ADYEN_REDIRECT)
+    @GetMapping(Constants.AdyenURL.ADYEN_REDIRECT)
     public String adyenRedirect(){
-        return Constant.CommonRsponseData.ACCEPT;
+        return Constants.CommonRsponseData.ACCEPT;
     }
 
 

@@ -1,8 +1,8 @@
 package com.paymentgateway.payment_gateway.util;
 
-public final class Constant {
+public final class Constants {
 
-    private Constant() {
+    private Constants() {
     }
 
   public final class PaymentController {
@@ -108,7 +108,6 @@ public final class Constant {
   public final class StripeStrategy{
         private StripeStrategy() {}
 
-      public static final int VALUE = 100 ;
         public static final String DESCRIPTION = "description" ;
 
   }
@@ -204,5 +203,10 @@ public final class Constant {
       public static final String SALE = "sale";
 
   }
+
+  public final class Tolerance {
+        private Tolerance() {}
+         public static  final Long TOLERANCE_VALUE = 54000L ;
+   }
 
 }

@@ -17,33 +17,33 @@ public class CurrencyConverter {
 
     static {
         // Currencies with 3 decimal places
-        CURRENCY_DECIMAL_PLACES.put(Constant.Currency.KWD, Constant.CurrencyDecimal.THREE_DECIMALS);
-        CURRENCY_DECIMAL_PLACES.put(Constant.Currency.BHD, Constant.CurrencyDecimal.THREE_DECIMALS);
-        CURRENCY_DECIMAL_PLACES.put(Constant.Currency.OMR, Constant.CurrencyDecimal.THREE_DECIMALS);
-        CURRENCY_DECIMAL_PLACES.put(Constant.Currency.JOD, Constant.CurrencyDecimal.THREE_DECIMALS);
-        CURRENCY_DECIMAL_PLACES.put(Constant.Currency.IQD, Constant.CurrencyDecimal.THREE_DECIMALS);
-        CURRENCY_DECIMAL_PLACES.put(Constant.Currency.LYD, Constant.CurrencyDecimal.THREE_DECIMALS);
-        CURRENCY_DECIMAL_PLACES.put(Constant.Currency.TND, Constant.CurrencyDecimal.THREE_DECIMALS);
+        CURRENCY_DECIMAL_PLACES.put(Constants.Currency.KWD, Constants.CurrencyDecimal.THREE_DECIMALS);
+        CURRENCY_DECIMAL_PLACES.put(Constants.Currency.BHD, Constants.CurrencyDecimal.THREE_DECIMALS);
+        CURRENCY_DECIMAL_PLACES.put(Constants.Currency.OMR, Constants.CurrencyDecimal.THREE_DECIMALS);
+        CURRENCY_DECIMAL_PLACES.put(Constants.Currency.JOD, Constants.CurrencyDecimal.THREE_DECIMALS);
+        CURRENCY_DECIMAL_PLACES.put(Constants.Currency.IQD, Constants.CurrencyDecimal.THREE_DECIMALS);
+        CURRENCY_DECIMAL_PLACES.put(Constants.Currency.LYD, Constants.CurrencyDecimal.THREE_DECIMALS);
+        CURRENCY_DECIMAL_PLACES.put(Constants.Currency.TND, Constants.CurrencyDecimal.THREE_DECIMALS);
 
         // Currencies with 0 decimal places
-        CURRENCY_DECIMAL_PLACES.put(Constant.Currency.JPY, Constant.CurrencyDecimal.ZERO_DECIMALS);
-        CURRENCY_DECIMAL_PLACES.put(Constant.Currency.KRW, Constant.CurrencyDecimal.ZERO_DECIMALS);
-        CURRENCY_DECIMAL_PLACES.put(Constant.Currency.VND, Constant.CurrencyDecimal.ZERO_DECIMALS);
-        CURRENCY_DECIMAL_PLACES.put(Constant.Currency.CLP, Constant.CurrencyDecimal.ZERO_DECIMALS);
-        CURRENCY_DECIMAL_PLACES.put(Constant.Currency.ISK, Constant.CurrencyDecimal.ZERO_DECIMALS);
-        CURRENCY_DECIMAL_PLACES.put(Constant.Currency.TWD, Constant.CurrencyDecimal.ZERO_DECIMALS);
-        CURRENCY_DECIMAL_PLACES.put(Constant.Currency.PYG, Constant.CurrencyDecimal.ZERO_DECIMALS);
-        CURRENCY_DECIMAL_PLACES.put(Constant.Currency.UGX, Constant.CurrencyDecimal.ZERO_DECIMALS);
-        CURRENCY_DECIMAL_PLACES.put(Constant.Currency.RWF, Constant.CurrencyDecimal.ZERO_DECIMALS);
-        CURRENCY_DECIMAL_PLACES.put(Constant.Currency.XAF, Constant.CurrencyDecimal.ZERO_DECIMALS);
-        CURRENCY_DECIMAL_PLACES.put(Constant.Currency.XOF, Constant.CurrencyDecimal.ZERO_DECIMALS);
-        CURRENCY_DECIMAL_PLACES.put(Constant.Currency.XPF, Constant.CurrencyDecimal.ZERO_DECIMALS);
-        CURRENCY_DECIMAL_PLACES.put(Constant.Currency.BIF, Constant.CurrencyDecimal.ZERO_DECIMALS);
-        CURRENCY_DECIMAL_PLACES.put(Constant.Currency.DJF, Constant.CurrencyDecimal.ZERO_DECIMALS);
-        CURRENCY_DECIMAL_PLACES.put(Constant.Currency.GNF, Constant.CurrencyDecimal.ZERO_DECIMALS);
-        CURRENCY_DECIMAL_PLACES.put(Constant.Currency.KMF, Constant.CurrencyDecimal.ZERO_DECIMALS);
-        CURRENCY_DECIMAL_PLACES.put(Constant.Currency.MGA, Constant.CurrencyDecimal.ZERO_DECIMALS);
-        CURRENCY_DECIMAL_PLACES.put(Constant.Currency.VUV, Constant.CurrencyDecimal.ZERO_DECIMALS);
+        CURRENCY_DECIMAL_PLACES.put(Constants.Currency.JPY, Constants.CurrencyDecimal.ZERO_DECIMALS);
+        CURRENCY_DECIMAL_PLACES.put(Constants.Currency.KRW, Constants.CurrencyDecimal.ZERO_DECIMALS);
+        CURRENCY_DECIMAL_PLACES.put(Constants.Currency.VND, Constants.CurrencyDecimal.ZERO_DECIMALS);
+        CURRENCY_DECIMAL_PLACES.put(Constants.Currency.CLP, Constants.CurrencyDecimal.ZERO_DECIMALS);
+        CURRENCY_DECIMAL_PLACES.put(Constants.Currency.ISK, Constants.CurrencyDecimal.ZERO_DECIMALS);
+        CURRENCY_DECIMAL_PLACES.put(Constants.Currency.TWD, Constants.CurrencyDecimal.ZERO_DECIMALS);
+        CURRENCY_DECIMAL_PLACES.put(Constants.Currency.PYG, Constants.CurrencyDecimal.ZERO_DECIMALS);
+        CURRENCY_DECIMAL_PLACES.put(Constants.Currency.UGX, Constants.CurrencyDecimal.ZERO_DECIMALS);
+        CURRENCY_DECIMAL_PLACES.put(Constants.Currency.RWF, Constants.CurrencyDecimal.ZERO_DECIMALS);
+        CURRENCY_DECIMAL_PLACES.put(Constants.Currency.XAF, Constants.CurrencyDecimal.ZERO_DECIMALS);
+        CURRENCY_DECIMAL_PLACES.put(Constants.Currency.XOF, Constants.CurrencyDecimal.ZERO_DECIMALS);
+        CURRENCY_DECIMAL_PLACES.put(Constants.Currency.XPF, Constants.CurrencyDecimal.ZERO_DECIMALS);
+        CURRENCY_DECIMAL_PLACES.put(Constants.Currency.BIF, Constants.CurrencyDecimal.ZERO_DECIMALS);
+        CURRENCY_DECIMAL_PLACES.put(Constants.Currency.DJF, Constants.CurrencyDecimal.ZERO_DECIMALS);
+        CURRENCY_DECIMAL_PLACES.put(Constants.Currency.GNF, Constants.CurrencyDecimal.ZERO_DECIMALS);
+        CURRENCY_DECIMAL_PLACES.put(Constants.Currency.KMF, Constants.CurrencyDecimal.ZERO_DECIMALS);
+        CURRENCY_DECIMAL_PLACES.put(Constants.Currency.MGA, Constants.CurrencyDecimal.ZERO_DECIMALS);
+        CURRENCY_DECIMAL_PLACES.put(Constants.Currency.VUV, Constants.CurrencyDecimal.ZERO_DECIMALS);
     }
 
 
@@ -51,14 +51,14 @@ public class CurrencyConverter {
 
 
 
-        if (amount <= Constant.CurrencyDecimal.ZERO_DECIMALS ) {
-            throw new TransactionValueException( Constant.CommonExeption.TRANSACTION_VALUE) ;
+        if (amount <= Constants.CurrencyDecimal.ZERO_DECIMALS ) {
+            throw new TransactionValueException( Constants.CommonExeption.TRANSACTION_VALUE) ;
         }
 
 
         BigDecimal baseAmount = BigDecimal.valueOf(amount);
 
-        int decimalPlaces = CURRENCY_DECIMAL_PLACES.getOrDefault(currency.toUpperCase(), Constant.CurrencyDecimal.TWO_DECIMALS);
+        int decimalPlaces = CURRENCY_DECIMAL_PLACES.getOrDefault(currency.toUpperCase(), Constants.CurrencyDecimal.TWO_DECIMALS);
         BigDecimal multiplier = BigDecimal.TEN.pow(decimalPlaces);
 
 

@@ -2,7 +2,7 @@ package com.paymentgateway.payment_gateway.dto;
 
 import jakarta.validation.constraints.NotNull;
 
-public record PaymentOperationRequest(
+public record SubsequentPaymentRequest(
         @NotNull String referenceId,
         Long amount,
         String currency,

@@ -1,9 +1,9 @@
 package com.paymentgateway.payment_gateway.service;
 
-import com.paymentgateway.payment_gateway.dto.PaymentOperationRequest;
-import com.paymentgateway.payment_gateway.dto.PaymentOperationResponse;
-import com.paymentgateway.payment_gateway.dto.PaymentRequest;
-import com.paymentgateway.payment_gateway.dto.PaymentResponse;
+import com.paymentgateway.payment_gateway.dto.SubsequentPaymentRequest;
+import com.paymentgateway.payment_gateway.dto.SubsequentPaymentResponse;
+import com.paymentgateway.payment_gateway.dto.FirstPaymentRequest;
+import com.paymentgateway.payment_gateway.dto.FirstPaymentResponse;
 import com.paymentgateway.payment_gateway.factory.PaymentStrategyFactory;
 import com.paymentgateway.payment_gateway.strategy.PaymentStrategy;
 import org.springframework.stereotype.Service;
@@ -17,31 +17,31 @@ public class PaymentOrchestrator {
         this.strategyFactory = strategyFactory;
     }
 
-    public PaymentResponse createDirectPayment(PaymentRequest request) {
+    public FirstPaymentResponse createDirectPayment(FirstPaymentRequest request) {
 
         PaymentStrategy strategy = strategyFactory.getStrategy(request.provider());
         return strategy.createDirectPayment(request);
     }
 
-    public PaymentResponse createAuthorizationPayment(PaymentRequest request) {
+    public FirstPaymentResponse createAuthorizationPayment(FirstPaymentRequest request) {
 
         PaymentStrategy strategy = strategyFactory.getStrategy(request.provider());
         return strategy.createAuthorizationPayment(request);
     }
 
-    public PaymentOperationResponse capturePayment(PaymentOperationRequest request) {
+    public SubsequentPaymentResponse capturePayment(SubsequentPaymentRequest request) {
 
         PaymentStrategy strategy = strategyFactory.getStrategy(request.provider());
         return strategy.capturePayment(request);
     }
 
-    public PaymentOperationResponse cancelPayment(PaymentOperationRequest request) {
+    public SubsequentPaymentResponse cancelPayment(SubsequentPaymentRequest request) {
 
         PaymentStrategy strategy = strategyFactory.getStrategy(request.provider());
         return strategy.cancelPayment(request);
     }
 
-    public PaymentOperationResponse refundPayment(PaymentOperationRequest request) {
+    public SubsequentPaymentResponse refundPayment(SubsequentPaymentRequest request) {
 
         PaymentStrategy strategy = strategyFactory.getStrategy(request.provider());
         return strategy.refundPayment(request);
