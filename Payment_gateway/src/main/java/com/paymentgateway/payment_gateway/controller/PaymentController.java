@@ -5,6 +5,7 @@ import com.paymentgateway.payment_gateway.dto.SubsequentPaymentResponse;
 import com.paymentgateway.payment_gateway.dto.FirstPaymentRequest;
 import com.paymentgateway.payment_gateway.dto.FirstPaymentResponse;
 import com.paymentgateway.payment_gateway.service.PaymentOrchestrator;
+import com.paymentgateway.payment_gateway.strategy.impl.StripePaymentStrategy;
 import com.paymentgateway.payment_gateway.util.APIResponse;
 import com.paymentgateway.payment_gateway.util.Constants;
 
@@ -20,9 +21,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class PaymentController {
 
     private final PaymentOrchestrator paymentOrchestrator;
+    private final StripePaymentStrategy  stripePaymentStrategy ;
 
-    public PaymentController(PaymentOrchestrator paymentOrchestrator) {
+
+    public PaymentController(PaymentOrchestrator paymentOrchestrator, StripePaymentStrategy stripePaymentStrategy) {
         this.paymentOrchestrator = paymentOrchestrator;
+        this.stripePaymentStrategy = stripePaymentStrategy;
     }
 
     @PostMapping(Constants.PaymentController.PAYMENT_DIRECT)
@@ -80,4 +84,19 @@ public class PaymentController {
                 APIResponse.ok(response, Constants.CommonSuccessMessage.PAYMENT_REFUND)
         );
     }
+
+
+    @PostMapping(Constants.PaymentController.SUBSCRIPTION)
+    public ResponseEntity<APIResponse<FirstPaymentResponse>> firstPayment(){
+
+
+        FirstPaymentResponse response = stripePaymentStrategy.createSubscription();
+
+        return ResponseEntity.ok(
+                APIResponse.ok(response, Constants.CommonSuccessMessage.PAYMENT_REFUND)
+        );
+
+    }
+
+
 }

@@ -14,6 +14,7 @@ public final class Constants {
       public static final String PAYMENT_DIRECT = "/direct";
       public static final String PAYMENT_CANCEL = "/cancel";
       public static final String PAYMENT_REFUND = "/refund";
+      public static final String SUBSCRIPTION = "/subscription";
 
   }
 
@@ -149,18 +150,6 @@ public final class Constants {
   }
 
 
-  public final class StripeWebhookEvent {
-
-        private StripeWebhookEvent() {}
-
-      public static final String CHECKOUT_SESSION_COMPLETED = "checkout.session.completed";
-      public static final String CHARGE_SUCCEEDED = "charge.succeeded";
-      public static final String PAYMENT_INTENT_CREATED = "payment_intent.created";
-      public static final String PAYMENT_INTENT_AMOUNT_CAPTURABLE_UPDATED = "payment_intent.amount_capturable_updated";
-      public static final String UNHANDLED_EVENT = "Unhandled event type: " ;
-  }
-
-
 
   public final class AdyenWebhook {
         private AdyenWebhook() {}
@@ -169,10 +158,12 @@ public final class Constants {
       public static final String WEBHOOK_ENDPOINT= "/notifications";
   }
 
-  public final class AdyenConfig {
-        private AdyenConfig() {}
-      public static final String ADYEN = "adyen" ;
+  public final class ConstantConfig {
+        private ConstantConfig() {}
+
+        public static final String ADYEN = "adyen" ;
         public static final String ADYEN_ENVIRONMENT= "live";
+      public static final String STRIPE = "stripe" ;
   }
 
   public final class Adyenwebhook {
@@ -207,6 +198,11 @@ public final class Constants {
   public final class Tolerance {
         private Tolerance() {}
          public static  final Long TOLERANCE_VALUE = 54000L ;
+   }
+
+   public final class Subscription{
+        private Subscription() {}
+       public static final Long SUBSCRIPTION_QUANTITY = 1L;
    }
 
 }

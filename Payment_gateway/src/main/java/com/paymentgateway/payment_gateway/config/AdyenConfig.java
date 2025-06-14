@@ -15,7 +15,7 @@ public class AdyenConfig {
 
     @Bean
     public Client adyenClient(AdyenConfigProperties config) {
-        Environment env = Constants.AdyenConfig.ADYEN_ENVIRONMENT.equalsIgnoreCase(config.getEnvironment())
+        Environment env = Constants.ConstantConfig.ADYEN_ENVIRONMENT.equalsIgnoreCase(config.getEnvironment())
                 ? Environment.LIVE
                 : Environment.TEST;
 

@@ -7,13 +7,10 @@ import org.springframework.context.annotation.Configuration;
 
 @Data
 @Configuration
-@ConfigurationProperties(prefix = Constants.ConstantConfig.ADYEN)
-public class AdyenConfigProperties {
+@ConfigurationProperties(prefix = Constants.ConstantConfig.STRIPE)
+public class StripeConfigProperties {
 
     private String apiKey;
-    private String clientKey;
-    private String environment;
-    private String merchantAccount;
-    private String returnUrl;
-    private String hmacKey;
+    String priceId;
+
 }

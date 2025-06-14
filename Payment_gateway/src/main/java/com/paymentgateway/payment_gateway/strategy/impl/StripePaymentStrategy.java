@@ -1,11 +1,11 @@
 package com.paymentgateway.payment_gateway.strategy.impl;
 
+import com.paymentgateway.payment_gateway.config.StripeConfigProperties;
 import com.paymentgateway.payment_gateway.dto.*;
 import com.paymentgateway.payment_gateway.exception.*;
 import com.paymentgateway.payment_gateway.strategy.PaymentStrategy;
 import com.paymentgateway.payment_gateway.util.Constants;
 import com.paymentgateway.payment_gateway.util.CurrencyConverter;
-import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.PaymentIntent;
 import com.stripe.model.Refund;
@@ -14,21 +14,21 @@ import com.stripe.param.PaymentIntentCancelParams;
 import com.stripe.param.PaymentIntentCaptureParams;
 import com.stripe.param.RefundCreateParams;
 import com.stripe.param.checkout.SessionCreateParams;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
 public class StripePaymentStrategy implements PaymentStrategy {
 
+    private final StripeConfigProperties config;
 
-    @Value("${stripe.api-key}")
-    private String secretKey;
-
+    public StripePaymentStrategy(StripeConfigProperties config) {
+        this.config = config;
+    }
 
     @Override
     public FirstPaymentResponse createDirectPayment(FirstPaymentRequest request) {
         try {
-            Stripe.apiKey = secretKey;
+
 
             SessionCreateParams params = buildSessionParams(request, false);
             Session session = Session.create(params);
@@ -44,10 +44,44 @@ public class StripePaymentStrategy implements PaymentStrategy {
         }
     }
 
+    public FirstPaymentResponse createSubscription() {
+        try {
+
+
+            SessionCreateParams params = SessionCreateParams.builder()
+                    .setMode(SessionCreateParams.Mode.SUBSCRIPTION)
+
+                    .addLineItem(
+                            SessionCreateParams.LineItem.builder()
+                                    .setPrice( config.getPriceId()) // Price ID must be for a recurring weekly price
+                                    .setQuantity(Constants.Subscription.SUBSCRIPTION_QUANTITY)
+                                    .build()
+                    )
+                    .setSuccessUrl(Constants.StripeURL.SUCCESS_URL)
+                    .setCancelUrl(Constants.StripeURL.FAILED_URL)
+                    .build();
+
+            Session session = Session.create(params);
+
+            return new FirstPaymentResponse(
+                    session.getUrl(),
+                    session.getId(),
+                    Constants.CommonRsponseData.ACCEPT,
+                    Constants.CommonSuccessMessage.PAYMENT_DIRECT
+            );
+        } catch (StripeException e) {
+            throw new PaymentException(Constants.CommonExeption.PAYMENT_DIRECT + e.getMessage(), e);
+        }
+    }
+
+
+
+
+
     @Override
     public FirstPaymentResponse createAuthorizationPayment(FirstPaymentRequest request) {
         try {
-            Stripe.apiKey = secretKey;
+
 
             SessionCreateParams params = buildSessionParams(request, true);
             Session session = Session.create(params);
@@ -66,7 +100,7 @@ public class StripePaymentStrategy implements PaymentStrategy {
     @Override
     public SubsequentPaymentResponse capturePayment(SubsequentPaymentRequest request) {
         try {
-            Stripe.apiKey = secretKey;
+
 
             PaymentIntent resource = PaymentIntent.retrieve(request.referenceId());
             PaymentIntentCaptureParams params = PaymentIntentCaptureParams.builder()
@@ -91,7 +125,7 @@ public class StripePaymentStrategy implements PaymentStrategy {
     @Override
     public SubsequentPaymentResponse cancelPayment(SubsequentPaymentRequest request) {
         try {
-            Stripe.apiKey = secretKey;
+
 
             PaymentIntent resource = PaymentIntent.retrieve(request.referenceId());
             PaymentIntentCancelParams params = PaymentIntentCancelParams.builder().build();
@@ -113,7 +147,7 @@ public class StripePaymentStrategy implements PaymentStrategy {
     @Override
     public SubsequentPaymentResponse refundPayment(SubsequentPaymentRequest request) {
         try {
-            Stripe.apiKey = secretKey;
+
 
             RefundCreateParams params = RefundCreateParams.builder()
                     .setPaymentIntent(request.referenceId())
@@ -181,3 +215,5 @@ public class StripePaymentStrategy implements PaymentStrategy {
 
 
 }
+
+
