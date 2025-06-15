@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class CurrencyConverter {
+public final class CurrencyConverter {
 
 
     private CurrencyConverter() {

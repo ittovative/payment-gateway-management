@@ -20,6 +20,14 @@ import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 
+/**
+ * This class provides a particular strategy for handling payments using Stripe.
+ * It allows the system to converse with Stripe's API for different actions like
+ * direct payments, authorization, capture, cancel, refund, and subscriptions.
+ *
+ * It's a pleasure to use Stripe when flexibility and control are important.
+ * If anything fails, this class throws custom exceptions to explain the cause.
+ */
 @Component
 public class StripePaymentStrategy implements PaymentStrategy {
 
@@ -29,6 +37,14 @@ public class StripePaymentStrategy implements PaymentStrategy {
         this.config = config;
     }
 
+    /**
+     * Creates a direct payment in Stripe. The payment is captured immediately.
+     * The user will be redirected somewhere (a hosted Stripe page) to complete the payment.
+     *
+     * @param request the payment request containing amount, currency, etc.
+     * @return a response with session URL and payment ID
+     * @throws PaymentException if Stripe cannot create the session
+     */
     @Override
     public FirstPaymentResponse createDirectPayment(FirstPaymentRequest request) {
         try {
@@ -49,6 +65,15 @@ public class StripePaymentStrategy implements PaymentStrategy {
     }
 
 
+
+    /**
+     * Creates an authorization payment in Stripe.
+     * The money is only held and not captured unless requested.
+     *
+     * @param request the payment request
+     * @return response with session URL and ID
+     * @throws AuthenticationCreationException if authorization setup fails
+     */
     @Override
     public FirstPaymentResponse createAuthorizationPayment(FirstPaymentRequest request) {
         try {
@@ -69,6 +94,13 @@ public class StripePaymentStrategy implements PaymentStrategy {
         }
     }
 
+    /**
+     * Captures a previously authorized payment.
+     *
+     * @param request contains the payment ID and amount to capture
+     * @return the result of the capture with Stripe IDs and amounts
+     * @throws CaptureException if capture fails
+     */
     @Override
     public SubsequentPaymentResponse capturePayment(SubsequentPaymentRequest request) {
         try {
@@ -94,6 +126,13 @@ public class StripePaymentStrategy implements PaymentStrategy {
         }
     }
 
+    /**
+     * Cancels a payment intent before it's captured.
+     *
+     * @param request the reference to the payment
+     * @return a cancellation response
+     * @throws CancelException if Stripe cancellation fails
+     */
     @Override
     public SubsequentPaymentResponse cancelPayment(SubsequentPaymentRequest request) {
         try {
@@ -116,6 +155,13 @@ public class StripePaymentStrategy implements PaymentStrategy {
         }
     }
 
+    /**
+     * Refunds a payment using the reference ID of the payment.
+     *
+     * @param request refund details
+     * @return a response with refund information
+     * @throws RefundException if refund fails
+     */
     @Override
     public SubsequentPaymentResponse refundPayment(SubsequentPaymentRequest request) {
         try {
@@ -140,12 +186,23 @@ public class StripePaymentStrategy implements PaymentStrategy {
         }
     }
 
+    /**
+     * Returns the name of the provider.
+     *
+     * @return "STRIPE"
+     */
     @Override
     public String getProviderName() {
         return Constants.Provider.STRIPE_PROVIDER;
     }
 
 
+    /**
+     * Creates a subscription session using Stripe with recurring price ID.
+     *
+     * @return a FirstPaymentResponse with a Stripe session
+     * @throws PaymentException if Stripe session creation fails
+     */
     public FirstPaymentResponse createSubscription() {
         try {
 
@@ -176,7 +233,17 @@ public class StripePaymentStrategy implements PaymentStrategy {
         }
     }
 
-        private SessionCreateParams buildSessionParams (FirstPaymentRequest request,boolean requiresManualCapture ) throws
+    /**
+     * Builds the Stripe session parameters used in both direct and authorization payment.
+     *
+     * If a customer ID is not given, a new one is created using the user's name and email.
+     *
+     * @param request the incoming request
+     * @param requiresManualCapture true if the payment should not auto-capture
+     * @return Stripe SessionCreateParams
+     * @throws StripeException if any Stripe API fails
+     */
+    private SessionCreateParams buildSessionParams (FirstPaymentRequest request,boolean requiresManualCapture ) throws
         StripeException {
             Long convertedAmount = CurrencyConverter.convertAmount(request.amount(), request.currency());
 

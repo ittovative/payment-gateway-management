@@ -6,7 +6,6 @@ import com.paymentgateway.payment_gateway.strategy.impl.StripePaymentStrategy;
 import com.paymentgateway.payment_gateway.util.APIResponse;
 import com.paymentgateway.payment_gateway.util.Constants;
 
-import com.stripe.exception.StripeException;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +13,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Controller class for handling payment-related operations.
+ * Provides endpoints for direct payments, authorizations, captures, cancellations,
+ * refunds, and subscription creation.
+ */
 @RestController
 @RequestMapping(Constants.PaymentController.PAYMENT)
 public class PaymentController {
@@ -27,6 +31,12 @@ public class PaymentController {
         this.stripePaymentStrategy = stripePaymentStrategy;
     }
 
+    /**
+     * Handles the creation of a direct payment.
+     *
+     * @param request the payment request details
+     * @return a response entity containing the payment result
+     */
     @PostMapping(Constants.PaymentController.PAYMENT_DIRECT)
     public ResponseEntity<APIResponse<FirstPaymentResponse>> createDirectPayment(
             @RequestBody @Valid FirstPaymentRequest request) {
@@ -38,6 +48,12 @@ public class PaymentController {
         );
     }
 
+    /**
+     * Handles the creation of an authorization-based payment (used for delayed capture scenarios).
+     *
+     * @param request the payment request details
+     * @return a response entity containing the authorization result
+     */
     @PostMapping(Constants.PaymentController.PAYMENT_AUTHORIZATION)
     public ResponseEntity<APIResponse<FirstPaymentResponse>> createAuthorizationPayment(
             @RequestBody FirstPaymentRequest request) {
@@ -49,6 +65,12 @@ public class PaymentController {
         );
     }
 
+    /**
+     * Captures a previously authorized payment.
+     *
+     * @param request the capture request containing the authorization reference
+     * @return a response entity containing the capture result
+     */
     @PostMapping(Constants.PaymentController.PAYMENT_CAPTURE)
     public ResponseEntity<APIResponse<SubsequentPaymentResponse>> capturePayment(
             @RequestBody SubsequentPaymentRequest request) {
@@ -60,6 +82,12 @@ public class PaymentController {
         );
     }
 
+    /**
+     * Cancels a previously authorized payment before it is captured.
+     *
+     * @param request the cancel request with relevant identifiers
+     * @return a response entity containing the cancellation result
+     */
     @PostMapping(Constants.PaymentController.PAYMENT_CANCEL)
     public ResponseEntity<APIResponse<SubsequentPaymentResponse>> cancelPayment(
             @RequestBody SubsequentPaymentRequest request) {
@@ -71,6 +99,12 @@ public class PaymentController {
         );
     }
 
+    /**
+     * Processes a refund for a previously completed payment.
+     *
+     * @param request the refund request containing transaction details
+     * @return a response entity containing the refund result
+     */
     @PostMapping(Constants.PaymentController.PAYMENT_REFUND)
     public ResponseEntity<APIResponse<SubsequentPaymentResponse>> refundPayment(
             @RequestBody SubsequentPaymentRequest request) {
@@ -84,6 +118,11 @@ public class PaymentController {
     }
 
 
+    /**
+     * Creates a new subscription payment using Stripe.
+     *
+     * @return a response entity containing the subscription result
+     */
     @PostMapping(Constants.PaymentController.SUBSCRIPTION)
     public ResponseEntity<APIResponse<FirstPaymentResponse>> subscriptionPayment() {
 

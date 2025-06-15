@@ -19,6 +19,11 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.util.UUID;
 
+/**
+ * This class handles payments using the Adyen provider.
+ * It is part of a strategy pattern to help converse with different payment services
+ * in a unified way. Each method performs a particular action like capture, refund, etc.
+ */
 @Component
 public class AdyenPaymentStrategy implements PaymentStrategy {
 
@@ -26,6 +31,13 @@ public class AdyenPaymentStrategy implements PaymentStrategy {
     private final AdyenConfigProperties config;
     private final ModificationsApi modificationsApi;
 
+    /**
+     * Creates an instance of the AdyenPaymentStrategy.
+     *
+     * @param paymentLinksApi   used to create payment links
+     * @param config            contains Adyen configuration like merchant account
+     * @param modificationsApi  used to perform actions like capture, cancel, and refund
+     */
     public AdyenPaymentStrategy(PaymentLinksApi paymentLinksApi,
                                 AdyenConfigProperties config,
                                 ModificationsApi modificationsApi) {
@@ -34,6 +46,13 @@ public class AdyenPaymentStrategy implements PaymentStrategy {
         this.modificationsApi = modificationsApi;
     }
 
+    /**
+     * Creates a direct payment. The user pays immediately.
+     *
+     * @param request contains amount, currency, and other info
+     * @return a response with payment URL and reference
+     * @throws PaymentException if something goes wrong while talking to Adyen
+     */
     @Override
     public FirstPaymentResponse createDirectPayment(FirstPaymentRequest request) {
         try {
@@ -68,6 +87,13 @@ public class AdyenPaymentStrategy implements PaymentStrategy {
         }
     }
 
+    /**
+     * Creates an authorization payment. The user approves now, and the money is captured later.
+     *
+     * @param request the payment request
+     * @return a response with a redirect URL and reference
+     * @throws AuthenticationCreationException if something causes the authorization to fail
+     */
     @Override
     public FirstPaymentResponse createAuthorizationPayment(FirstPaymentRequest request) {
         try {
@@ -101,6 +127,15 @@ public class AdyenPaymentStrategy implements PaymentStrategy {
         }
     }
 
+
+    /**
+     * Captures money from an authorized payment.
+     * This usually happens after the user approved the payment somewhere before.
+     *
+     * @param request contains the reference ID and amount to capture
+     * @return a response with the result of the capture
+     * @throws CaptureException if the capture fails
+     */
     @Override
     public SubsequentPaymentResponse capturePayment(SubsequentPaymentRequest request) {
         try {
@@ -131,6 +166,13 @@ public class AdyenPaymentStrategy implements PaymentStrategy {
         }
     }
 
+    /**
+     * Cancels an authorized payment before the money is captured.
+     *
+     * @param request contains the payment reference
+     * @return a response showing that the cancel was successful
+     * @throws CancelException if cancel fails
+     */
     @Override
     public SubsequentPaymentResponse cancelPayment(SubsequentPaymentRequest request) {
         try {
@@ -153,6 +195,13 @@ public class AdyenPaymentStrategy implements PaymentStrategy {
         }
     }
 
+    /**
+     * Refunds a completed payment. This gives the user back their money.
+     *
+     * @param request contains reference and amount to refund
+     * @return a response with refund status
+     * @throws RefundException if refund fails
+     */
     @Override
     public SubsequentPaymentResponse refundPayment(SubsequentPaymentRequest request) {
         try {
@@ -181,6 +230,11 @@ public class AdyenPaymentStrategy implements PaymentStrategy {
         }
     }
 
+    /**
+     * Returns the name of the provider this strategy handles.
+     *
+     * @return the string "ADYEN"
+     */
     @Override
     public String getProviderName() {
         return Constants.Provider.ADYEN_PROVIDER;

@@ -1,6 +1,7 @@
 package com.paymentgateway.payment_gateway.exception;
 
 import com.paymentgateway.payment_gateway.util.APIResponse;
+import com.paymentgateway.payment_gateway.util.Constants;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -47,31 +48,24 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
-//    @ExceptionHandler(ApiException.class)
-//    public ResponseEntity<APIResponse<String>> handleApiException(ApiException ex) {
-//        logger.error("Adyen API error: {}", ex.getMessage(), ex);
-//        APIResponse<String> response = APIResponse.error(HttpStatus.BAD_REQUEST.value(), Constants.GlobalExceptionHandler.ADYEN_API_ERROR);
-//        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-//    }
-
     @ExceptionHandler(IOException.class)
-    public ResponseEntity<APIResponse<String>> handleIOException(IOException ex) { // todo : Constants.GlobalExceptionHandler
+    public ResponseEntity<APIResponse<String>> handleIOException(IOException ex) {
 
-        APIResponse<String> response = APIResponse.error(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Internal Server Error");
+        APIResponse<String> response = APIResponse.error(HttpStatus.INTERNAL_SERVER_ERROR.value(), Constants.CommonExeption.GLOBAL_EXCEPTION);
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<APIResponse<String>> handleAllExceptions(Exception ex) {  // todo : Constants.GlobalExceptionHandler
+    public ResponseEntity<APIResponse<String>> handleAllExceptions(Exception ex) {
 
-        APIResponse<String> response = APIResponse.error(HttpStatus.INTERNAL_SERVER_ERROR.value(),"Internal Server Error");
+        APIResponse<String> response = APIResponse.error(HttpStatus.INTERNAL_SERVER_ERROR.value(),Constants.CommonExeption.GLOBAL_EXCEPTION);
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @ExceptionHandler(HMACValidationException.class) // todo : Constants.GlobalExceptionHandler.HMAC_VALIDATION_ERROR
+    @ExceptionHandler(HMACValidationException.class)
     public ResponseEntity<APIResponse<String>> handleHMACValidationException(HMACValidationException ex) {
 
-        APIResponse<String> response = APIResponse.error(HttpStatus.UNAUTHORIZED.value(), "Internal Server Error");
+        APIResponse<String> response = APIResponse.error(HttpStatus.UNAUTHORIZED.value(), Constants.CommonExeption.GLOBAL_EXCEPTION);
         return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
     }
 }

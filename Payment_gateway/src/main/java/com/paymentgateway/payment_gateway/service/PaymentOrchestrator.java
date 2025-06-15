@@ -8,6 +8,17 @@ import com.paymentgateway.payment_gateway.factory.PaymentStrategyFactory;
 import com.paymentgateway.payment_gateway.strategy.PaymentStrategy;
 import org.springframework.stereotype.Service;
 
+
+/**
+ * The PaymentOrchestrator is responsible for coordinating payment operations.
+ * <p>
+ * It uses the PaymentStrategyFactory to select the correct payment strategy based on the provider.
+ * This allows your system to converse with different payment providers in a unified way.
+ * </p>
+ * <p>
+ * It supports several operations like direct payment, authorization, capture, cancel, and refund.
+ * </p>
+ */
 @Service
 public class PaymentOrchestrator {
 

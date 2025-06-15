@@ -28,7 +28,8 @@ public final class Constants {
       public static final String PAYMENT_REFUND = "Failed to refund payment: ";
       public static final String WEBHOOK_FAILED = "Failed to process webhook notification: " ;
       public static final String UNSUPPORTED_PROVIDER = "Unsupported payment provider: "  ;
-      public static final String  TRANSACTION_VALUE = "Amount and quantity must be greater than 0";
+      public static final String TRANSACTION_VALUE = "Amount and quantity must be greater than 0";
+      public static final String GLOBAL_EXCEPTION = "Internal Server Error";
   }
 
     public static final class Currency {

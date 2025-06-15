@@ -13,6 +13,16 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class handles payment operations using PayPal.
+ * It is a particular strategy in the strategy pattern that allows the app to converse
+ * with different payment providers (like Adyen, Stripe, etc.).
+ *
+ * Each method here works with the PayPal API to handle payment tasks like creating a payment
+ * or generating a redirect link for approval.
+ *
+ *      ****  PayPal not work at the Production Level Now  ****
+ */
 @Component
 public class PayPalPaymentStrategy implements PaymentStrategy {
 
