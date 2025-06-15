@@ -32,7 +32,8 @@ public class PayPalPaymentStrategy implements PaymentStrategy {
                     approvalUrl,
                     payment.getId(),
                     Constants.CommonRsponseData.ACCEPT,
-                    Constants.CommonSuccessMessage.PAYMENT_DIRECT
+                    Constants.CommonSuccessMessage.PAYMENT_DIRECT,
+                    null
             );
         } catch (PayPalRESTException e) {
             throw new PaymentException(Constants.CommonExeption.PAYMENT_DIRECT + e.getMessage() );
@@ -49,7 +50,8 @@ public class PayPalPaymentStrategy implements PaymentStrategy {
                     approvalUrl,
                     payment.getId(),
                     Constants.CommonRsponseData.ACCEPT,
-                    Constants.CommonSuccessMessage.PAYMENT_AUTHORIZATION
+                    Constants.CommonSuccessMessage.PAYMENT_AUTHORIZATION,
+                    null
             );
         } catch (PayPalRESTException e) {
             throw new AuthenticationCreationException(Constants.CommonExeption.PAYMENT_AUTHORIZATION + e.getMessage() );

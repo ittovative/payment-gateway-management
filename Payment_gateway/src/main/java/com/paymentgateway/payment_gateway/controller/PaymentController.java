@@ -1,14 +1,13 @@
 package com.paymentgateway.payment_gateway.controller;
 
-import com.paymentgateway.payment_gateway.dto.SubsequentPaymentRequest;
-import com.paymentgateway.payment_gateway.dto.SubsequentPaymentResponse;
-import com.paymentgateway.payment_gateway.dto.FirstPaymentRequest;
-import com.paymentgateway.payment_gateway.dto.FirstPaymentResponse;
+import com.paymentgateway.payment_gateway.dto.*;
 import com.paymentgateway.payment_gateway.service.PaymentOrchestrator;
 import com.paymentgateway.payment_gateway.strategy.impl.StripePaymentStrategy;
 import com.paymentgateway.payment_gateway.util.APIResponse;
 import com.paymentgateway.payment_gateway.util.Constants;
 
+import com.stripe.exception.StripeException;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(Constants.PaymentController.PAYMENT)
-
 public class PaymentController {
 
     private final PaymentOrchestrator paymentOrchestrator;
@@ -31,7 +29,7 @@ public class PaymentController {
 
     @PostMapping(Constants.PaymentController.PAYMENT_DIRECT)
     public ResponseEntity<APIResponse<FirstPaymentResponse>> createDirectPayment(
-            @RequestBody FirstPaymentRequest request) {
+            @RequestBody @Valid FirstPaymentRequest request) {
 
         FirstPaymentResponse response = paymentOrchestrator.createDirectPayment(request);
 
@@ -87,7 +85,7 @@ public class PaymentController {
 
 
     @PostMapping(Constants.PaymentController.SUBSCRIPTION)
-    public ResponseEntity<APIResponse<FirstPaymentResponse>> firstPayment(){
+    public ResponseEntity<APIResponse<FirstPaymentResponse>> subscriptionPayment() {
 
 
         FirstPaymentResponse response = stripePaymentStrategy.createSubscription();
@@ -97,6 +95,9 @@ public class PaymentController {
         );
 
     }
+
+
+
 
 
 }

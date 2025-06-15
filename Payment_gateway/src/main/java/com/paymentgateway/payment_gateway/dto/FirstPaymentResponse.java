@@ -5,5 +5,6 @@ public record FirstPaymentResponse(
         String redirectUrl,
         String referenceId,
         String status,
-        String message
+        String message,
+        String customerId
 ){}

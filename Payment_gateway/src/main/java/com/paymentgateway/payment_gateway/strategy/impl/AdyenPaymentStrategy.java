@@ -60,7 +60,8 @@ public class AdyenPaymentStrategy implements PaymentStrategy {
                     response.getUrl(),
                     response.getReference(),
                     Constants.CommonRsponseData.ACCEPT,
-                    Constants.CommonSuccessMessage.PAYMENT_DIRECT
+                    Constants.CommonSuccessMessage.PAYMENT_DIRECT,
+                    null
             );
         } catch (IOException | ApiException e ) {
             throw new PaymentException(Constants.CommonExeption.PAYMENT_DIRECT + e.getMessage() );
@@ -92,7 +93,8 @@ public class AdyenPaymentStrategy implements PaymentStrategy {
                     response.getUrl(),
                     response.getReference(),
                     Constants.CommonRsponseData.ACCEPT,
-                    Constants.CommonSuccessMessage.PAYMENT_AUTHORIZATION
+                    Constants.CommonSuccessMessage.PAYMENT_AUTHORIZATION,
+                    null
             );
         } catch (IOException | ApiException e) {
             throw new AuthenticationCreationException(Constants.CommonExeption.PAYMENT_AUTHORIZATION + e.getMessage() );
