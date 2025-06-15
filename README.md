@@ -2,6 +2,12 @@
 
 A comprehensive payment processing solution integrating multiple payment providers to offer flexible payment options for diverse client requirements.
 
+## Clone the Repository
+
+```bash
+git clone https://github.com/ittovative/payment-gateway-management.git
+
+```
 ## 🚀 Features
 
 ### Supported Payment Providers
